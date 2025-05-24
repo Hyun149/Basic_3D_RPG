@@ -1,9 +1,8 @@
-# 🎮 TPS Player Controller System (Unity 2022.3)
+# 🎮 Slimeventure: A TPS Slime RPG
 
-Unity 2022.3 LTS 기반으로 제작된 **TPS 시점 플레이어 컨트롤러 시스템**입니다.  
-`Input System` 기반 이동, 마우스 Look, 점프 기능, GroundCheck 시스템이 통합되어 있으며,  
-URP 환경과 초기 씬 구성이 완료된 상태입니다.
-
+Unity 2022.3 LTS 기반으로 제작된 밝고 귀여운 슬라임 RPG,  
+`Input System`, `TPS 카메라`, `점프`, `지면 체크` 등 기본 기능이 포함된  
+슬라임의 모험을 위한 컨트롤러 데모입니다.
 ---
 
 ## 🚀 주요 기능 (Features)
