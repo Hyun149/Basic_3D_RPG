@@ -11,8 +11,11 @@ public class PlayerMovement : MonoBehaviour, IPlayerActions
     [Header("Look")]
     [SerializeField] private PlayerLook lookHandler;
 
+    [Header("Move")]
     [SerializeField] private float moveSpeed;
     [SerializeField] private float jumpForce = 5f;
+
+    [Header("Ground Check")]
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private float groundCheckRadius = 0.3f;
@@ -22,21 +25,29 @@ public class PlayerMovement : MonoBehaviour, IPlayerActions
     private Vector2 currentInput;
 
     private bool isGrounded;
+    private bool jumpRequested;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
-
         inputHandler = GetComponent<PlayerInputHandler>();
         inputHandler.Initialize(this);
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         CheckGround();
-        Vector3 move = new Vector3(currentInput.x, 0f, currentInput.y);
-        Vector3 worldMove = transform.TransformDirection(move);
-        rb.MovePosition(rb.position + worldMove * moveSpeed * Time.fixedDeltaTime);
+    }
+
+    private void FixedUpdate()
+    {
+        MovePlayer();
+
+        if (jumpRequested && isGrounded)
+        {
+            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            jumpRequested = false;
+        }
     }
 
     public void OnMove(Vector2 moveInput)
@@ -46,15 +57,19 @@ public class PlayerMovement : MonoBehaviour, IPlayerActions
 
     public void OnJump()
     {
-        if (isGrounded)
-        {
-            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-        }
+        jumpRequested = true;
     }
 
     public void OnLook(Vector2 lookInput)
     {
         lookHandler?.ApplyLook(lookInput);
+    }
+
+    private void MovePlayer()
+    {
+        Vector3 move = new Vector3(currentInput.x, 0f, currentInput.y);
+        Vector3 worldMove = transform.TransformDirection(move);
+        rb.MovePosition(rb.position + worldMove * moveSpeed * Time.fixedDeltaTime);
     }
 
     private void CheckGround()
