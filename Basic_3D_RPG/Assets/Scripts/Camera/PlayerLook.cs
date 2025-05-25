@@ -10,11 +10,11 @@ public class PlayerLook : MonoBehaviour
 {
     [Header("Look 설정")]
     [SerializeField] private Transform cameraTarget;
-    [SerializeField] private float sensitivity = 3f;
-    [SerializeField] private float minx = -60f;
-    [SerializeField] private float maxX = 60f;
+    [SerializeField] private float sensitivity;
+    [SerializeField] private float minx;
+    [SerializeField] private float maxX;
 
-    private float camXRotation = 0f;
+    private float camXRotation;
 
     /// <summary>
     /// Look 입력 벡터에 따라 회전 처리
